@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ApostadorService } from './apostador.service';
 
 @Component({
-  selector: 'concurso',
+  selector: 'concaurso',
   templateUrl: './concurso.component.html',
   styleUrls: ['./concurso.component.css']
 })
@@ -14,6 +14,7 @@ export class ConcursoComponent implements OnInit {
   }
 
   public apostas: Aposta[];
+  public probs: Probabilidades[];
 
   sortList(): void {
     this.apostas.sort(this.compare);
@@ -27,6 +28,10 @@ export class ConcursoComponent implements OnInit {
   ngOnInit(): void {
     this.apostasService.getApostas()
     .then(apostas => {console.log('Apostas', apostas); this.apostas = apostas})
+    .catch(e => console.log('Erro: ' + e));
+    
+    this.apostasService.getProbs()
+    .then(probs => {console.log('Probabilidades', probs); this.probs = probs})
     .catch(e => console.log('Erro: ' + e));
   }
 
