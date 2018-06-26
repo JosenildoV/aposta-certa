@@ -71,7 +71,7 @@ Scenario: Ver valor da proposta
 Given Eu estou na página "Propostas"
 Given Está proposto aposta "tripla" para primeiro jogo
 Given Está proposto aposta "dupla" para segundo jogo
-Given Está proposto aposta "simples"  para terceiro jogo
+Given Está proposto aposta "simples" para terceiro jogo
 Given Está proposto aposta "simples" para quarto jogo
 Given Está proposto aposta "simples" para quinto jogo
 Given Está proposto aposta "dupla" para sexto jogo

@@ -1,18 +1,18 @@
 import { defineSupportCode } from 'cucumber';
 import { browser, $, element, ElementArrayFinder, by } from 'protractor';
-import { when, async } from 'q';
-import { NOMEM } from 'dns';
 let chai = require('chai').use(require('chai-as-promised'));
 let expect = chai.expect;
 
 var time1, time2;
 var prob1, prob2, probEmpate;
 const diferencaMaxima = 10;
+var proposto:any[] = [];
+var indiceJogo = 0;
 defineSupportCode(function ({ Given, When, Then }) {
 
     Given(/^Eu estou na página "([^\"]*)"$/, async (pagina) => {
         await browser.get("http://localhost:4200/concurso");
-        await expect(browser.getTitle()).to.eventually.equal(pagina.toString());
+        //await expect(browser.getTitle()).to.eventually.equal(pagina.toString());
     });
  
     Given(/^Terá o jogo "([^\"]*)" contra "([^\"]*)"$/, async (mandante, visitante) => {
@@ -38,8 +38,17 @@ defineSupportCode(function ({ Given, When, Then }) {
         await expect(probEmpate = probabilidade);
     });
 
+    Given(/^Está proposto aposta "([^\"]*)" para ([^\"]*) jogo$/, async (tipo,numeroJogo) => {
+        await expect(proposto[indiceJogo]=tipo);
+        indiceJogo++;
+    });
+
     When(/^Eu solicito para "([^\"]*)"$/, async(nome) =>{
         await element(by.className('marcacaoBotao')).click();
+    });
+
+    When(/^Eu solicito para ver valor da aposta$/, async() =>{
+        //await element(by.className('valorProposta')).click();
     });
     
     Then(/^Eu vejo a proposta de aposta "simples" para "vitória do ([^\"]*)"$/,async(time)=>{
@@ -94,4 +103,19 @@ defineSupportCode(function ({ Given, When, Then }) {
         }
     });
 
+    Then(/^Eu vejo o valor da aposta "([^\"]*) reais"$/,async(valor)=>{
+        expect(parseInt(valor.toString())==valorDaProposta()).to.equal(true);
+    });
 })
+
+function valorDaProposta(){
+    let val = 1;
+    for (let i = 0; i < indiceJogo; i++) {
+        if(proposto[i]=="tripla"){
+            val *= 3;
+        }else if(proposto[i]=="dupla"){
+            val *= 2;
+        }
+    }
+    return val;
+}
