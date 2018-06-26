@@ -16,7 +16,7 @@ export class fabricaDePropostas {
                 mandante: jogos[j].mandante,
                 visitante: jogos[j].visitante,
                 numeroJogo: "Jogo "+j+"",
-                
+                tipo_proposta: proposta.tipo,
                 prop_Mandante: proposta.mandante,
                 prop_Visitante:proposta.visitante,
                 prop_Empate: proposta.empate
@@ -28,9 +28,30 @@ export class fabricaDePropostas {
 
     calcularProp(prob){
         let prop: any[] = [];
-
-        if(prob[0] > prob[1] && prob[0] > prob[2]){
+        if(prob[0] > prob[2] && prob[1] > prob[2] && Math.abs(prob[0]-prob[1])<10){
             prop.push({
+                tipo: "dupla",
+                mandante: true,
+                visitante: true,
+                empate: false
+            });
+        }else if(prob[0] > prob[1] && prob[2] > prob[1] && Math.abs(prob[0]-prob[2])<10){
+            prop.push({
+                tipo: "dupla",
+                mandante: true,
+                visitante: false,
+                empate: true
+            });
+        }else if(prob[1] > prob[0] && prob[2] > prob[0] && Math.abs(prob[1]-prob[2])<10){
+            prop.push({
+                tipo: "dupla",
+                mandante: false,
+                visitante: true,
+                empate: true
+            });
+        }else if(prob[0] > prob[1] && prob[0] > prob[2]){
+            prop.push({
+                tipo: "simples",
                 mandante: true,
                 visitante: false,
                 empate: false
@@ -38,22 +59,25 @@ export class fabricaDePropostas {
             
         }else if(prob[1]  > prob[0] && prob[1]  > prob[2]){
             prop.push({
+                tipo: "simples",
                 mandante: false,
                 visitante: true,
                 empate: false
             });
         }else if(prob[2] > prob[0] && prob[2] > prob[1]){
             prop.push({
+                tipo: "simples",
                 mandante: false,
                 visitante: false,
                 empate: true
             });
         }else{
             prop.push({
+                tipo: "inválido",
                 mandante: false,
                 visitante: false,
                 empate: false
-                });
+            });
         }
         console.log(prop);
         return prop[0];
