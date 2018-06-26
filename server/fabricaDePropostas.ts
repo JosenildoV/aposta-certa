@@ -29,18 +29,19 @@ export class fabricaDePropostas {
 
     calcularProp(prob){
         let prop: any[] = [];
-        if((prob[0] >= prob[1] && prob[0] >= prob[2] && Math.abs(prob[0]-prob[1])<=diferencaMaxima && Math.abs(prob[0]-prob[2])<=diferencaMaxima) ||
-        (prob[1] >= prob[0] && prob[1] >= prob[2] && Math.abs(prob[0]-prob[1])<=diferencaMaxima && Math.abs(prob[1]-prob[2])<=diferencaMaxima) ||
-        (prob[2] >= prob[0] && prob[2] >= prob[1] && Math.abs(prob[0]-prob[2])<=diferencaMaxima && Math.abs(prob[1]-prob[2])<=diferencaMaxima)){
+        if(aceitatripla(prob[0],prob[1],prob[2]) ||
+         (aceitatripla(prob[1],prob[0],prob[2])) ||
+         (aceitatripla(prob[2],prob[0],prob[1]))){
+             
             prop.push(ColocarProposta("tripla", true, true, true));
 
-        }else if(prob[0] > prob[2] && prob[1] > prob[2] && Math.abs(prob[0]-prob[1])<=diferencaMaxima){
+        }else if(aceitaDupla(prob[0],prob[1],prob[2])){
             prop.push(ColocarProposta("dupla", true, true, false));
 
-        }else if(prob[0] > prob[1] && prob[2] > prob[1] && Math.abs(prob[0]-prob[2])<=diferencaMaxima){
+        }else if(aceitaDupla(prob[0], prob[2], prob[1])){
             prop.push(ColocarProposta("dupla", true, false, true));
 
-        }else if(prob[1] > prob[0] && prob[2] > prob[0] && Math.abs(prob[1]-prob[2])<=diferencaMaxima){
+        }else if(aceitaDupla(prob[1], prob[2], prob[0])){
             prop.push(ColocarProposta("dupla", false, true, true));
 
         }else if(prob[0] > prob[1] && prob[0] > prob[2]){
@@ -60,6 +61,18 @@ export class fabricaDePropostas {
         return prop[0];
     }
 
+}
+
+function aceitatripla(prob1,prob2,prob3) {
+    return (prob1 >= prob2 && prob1 >= prob3 && aceitaDiferenca(prob1, prob2) && aceitaDiferenca(prob1, prob3));
+}
+
+function aceitaDupla(prob1,prob2,prob3):boolean {
+    return (prob1 > prob3 && prob2 > prob3 && aceitaDiferenca(prob1, prob2));
+}
+
+function aceitaDiferenca(prob1, prob2):boolean {
+    return (Math.abs(prob1 - prob2) <= diferencaMaxima);
 }
 
 function ColocarProposta(tipo: String, mandante: boolean, visitante: boolean, empate: boolean){
