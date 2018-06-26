@@ -81,6 +81,8 @@ function getProbabilidades(options) {
 }
 
 function getPropostas(options){
-    request(options).then($ => propostas = fabricaPropostas.Propor(fabricaApostas.crawlProbabilidades($))).catch(e => console.log(e));
+    request(options)
+    .then($ => propostas = fabricaPropostas.Propor(fabricaApostas.crawlProbabilidades($)))
+    .catch(e => console.log(e));
 }
 

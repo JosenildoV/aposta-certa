@@ -6,23 +6,17 @@ export class fabricaDePropostas {
 
     Propor(jogos):any[]{
         let propostas: any[] = [];
-        //console.log(jogos);
+
         for(let j = 0; j < 14; j++) {
 
-            let posm = jogos[j].vitoriaMandante.indexOf("%");
-            let posv = jogos[j].vitoriaVisitante.indexOf("%");
-            let pose = jogos[j].empate.indexOf("%");
-
-            let proposta: any = this.calcularProp([jogos[j].vitoriaMandante.substring(0,posm),
-                                                    jogos[j].vitoriaVisitante.toString().substring(0,posv),
-                                                     jogos[j].empate.toString().substring(0,pose)]);
+            console.log(porcentagemParaInteiro(jogos[j]));
+            let proposta: any = this.calcularProp(porcentagemParaInteiro(jogos[j]));
             
-            console.log(proposta);
             propostas.push({
                 mandante: jogos[j].mandante,
                 visitante: jogos[j].visitante,
                 numeroJogo: "Jogo "+j+"",
-                //data: jogos[j].data,
+                
                 prop_Mandante: proposta.mandante,
                 prop_Visitante:proposta.visitante,
                 prop_Empate: proposta.empate
@@ -34,21 +28,21 @@ export class fabricaDePropostas {
 
     calcularProp(prob){
         let prop: any[] = [];
-        console.log(prob);
-        if(parseInt(prob[0],10) > parseInt(prob[1],10) && parseInt(prob[0],10) > parseInt(prob[2],10)){
+
+        if(prob[0] > prob[1] && prob[0] > prob[2]){
             prop.push({
                 mandante: true,
                 visitante: false,
                 empate: false
             });
             
-        }else if(parseInt(prob[1],10)  > parseInt(prob[0],10) && parseInt(prob[1],10)  > prob[2]){
+        }else if(prob[1]  > prob[0] && prob[1]  > prob[2]){
             prop.push({
                 mandante: false,
                 visitante: true,
                 empate: false
             });
-        }else if(parseInt(prob[2],10) > parseInt(prob[0],10) && prob[2] > parseInt(prob[1],10) ){
+        }else if(prob[2] > prob[0] && prob[2] > prob[1]){
             prop.push({
                 mandante: false,
                 visitante: false,
@@ -61,8 +55,29 @@ export class fabricaDePropostas {
                 empate: false
                 });
         }
-        //console.log(prop);
+        console.log(prop);
         return prop[0];
     }
 
+}
+
+function porcentagemParaInteiro(jogo){
+    let posm = jogo.vitoriaMandante.indexOf("%");
+    let posv = jogo.vitoriaVisitante.indexOf("%");
+    let pose = jogo.empate.indexOf("%");
+    
+    //Eliminar o simbolo de porcentagem
+    let jogoString: any[] = [];
+    jogoString[0] = jogo.vitoriaMandante.toString().substring(0,posm);
+    jogoString[1] = jogo.vitoriaVisitante.toString().substring(0,posv);
+    jogoString[2] = jogo.empate.toString().substring(0,pose);
+
+    //Transformar em numero inteiro
+    let jogoInt: any[] = [];
+    jogoInt[0] = parseInt(jogoString[0],10);
+    jogoInt[1] = parseInt(jogoString[1],10);
+    jogoInt[2] = parseInt(jogoString[2],10);
+
+    return jogoInt;
+    
 }

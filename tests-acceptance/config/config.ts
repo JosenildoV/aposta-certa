@@ -8,7 +8,7 @@ export let config: Config = {
 
     capabilities: {
         browserName: 'chrome'
-       //version: "67.0.3396.87", 
+        //version: "67.0.3396.99", 
         //chromeOptions: {binary: '/home/CIN/jva/.local/opt/google/chrome/google-chrome'} 
     },
 
