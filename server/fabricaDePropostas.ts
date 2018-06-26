@@ -1,6 +1,7 @@
 import { WSAEPROTONOSUPPORT } from "constants";
 import { relative } from "path";
 
+const diferencaMaxima = 10;
 // Crawler para pegar as informações dos jogos.
 export class fabricaDePropostas {
 
@@ -9,13 +10,13 @@ export class fabricaDePropostas {
 
         for(let j = 0; j < 14; j++) {
 
-            console.log(porcentagemParaInteiro(jogos[j]));
             let proposta: any = this.calcularProp(porcentagemParaInteiro(jogos[j]));
             
             propostas.push({
                 mandante: jogos[j].mandante,
                 visitante: jogos[j].visitante,
                 numeroJogo: "Jogo "+j+"",
+
                 tipo_proposta: proposta.tipo,
                 prop_Mandante: proposta.mandante,
                 prop_Visitante:proposta.visitante,
@@ -28,61 +29,38 @@ export class fabricaDePropostas {
 
     calcularProp(prob){
         let prop: any[] = [];
-        if(prob[0] > prob[2] && prob[1] > prob[2] && Math.abs(prob[0]-prob[1])<10){
-            prop.push({
-                tipo: "dupla",
-                mandante: true,
-                visitante: true,
-                empate: false
-            });
-        }else if(prob[0] > prob[1] && prob[2] > prob[1] && Math.abs(prob[0]-prob[2])<10){
-            prop.push({
-                tipo: "dupla",
-                mandante: true,
-                visitante: false,
-                empate: true
-            });
-        }else if(prob[1] > prob[0] && prob[2] > prob[0] && Math.abs(prob[1]-prob[2])<10){
-            prop.push({
-                tipo: "dupla",
-                mandante: false,
-                visitante: true,
-                empate: true
-            });
+
+        if(prob[0] > prob[2] && prob[1] > prob[2] && Math.abs(prob[0]-prob[1])<diferencaMaxima){
+            prop.push(ColocarProposta("dupla", true, true, false));
+
+        }else if(prob[0] > prob[1] && prob[2] > prob[1] && Math.abs(prob[0]-prob[2])<diferencaMaxima){
+            prop.push(ColocarProposta("dupla", true, false, true));
+
+        }else if(prob[1] > prob[0] && prob[2] > prob[0] && Math.abs(prob[1]-prob[2])<diferencaMaxima){
+            prop.push(ColocarProposta("dupla", false, true, true));
+
         }else if(prob[0] > prob[1] && prob[0] > prob[2]){
-            prop.push({
-                tipo: "simples",
-                mandante: true,
-                visitante: false,
-                empate: false
-            });
+            prop.push(ColocarProposta("simples", true, false, false));
             
         }else if(prob[1]  > prob[0] && prob[1]  > prob[2]){
-            prop.push({
-                tipo: "simples",
-                mandante: false,
-                visitante: true,
-                empate: false
-            });
+            prop.push(ColocarProposta("simples", false, true, false));
+
         }else if(prob[2] > prob[0] && prob[2] > prob[1]){
-            prop.push({
-                tipo: "simples",
-                mandante: false,
-                visitante: false,
-                empate: true
-            });
+            prop.push(ColocarProposta("simples", false, false, true));
+
         }else{
-            prop.push({
-                tipo: "inválido",
-                mandante: false,
-                visitante: false,
-                empate: false
-            });
+            prop.push(ColocarProposta("invalido", false, false, false));
+            
         }
         console.log(prop);
         return prop[0];
     }
 
+}
+
+function ColocarProposta(tipo: String, mandante: boolean, visitante: boolean, empate: boolean){
+    let proposta: any = {tipo,mandante,visitante,empate};
+    return proposta;
 }
 
 function porcentagemParaInteiro(jogo){

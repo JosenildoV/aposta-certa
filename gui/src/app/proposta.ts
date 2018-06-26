@@ -1,4 +1,4 @@
-// Apostas e suas probabilidades.
+// Apostas e suas propostas.
 
 class Proposta {
 
@@ -6,9 +6,9 @@ class Proposta {
     public visitante: String;
     public numeroJogo: String;
     public tipo_proposta: String;
-    private prop_Mandante: boolean;
+    public prop_Mandante: boolean;
     public prop_Visitante: boolean;
-    private prop_Empate: boolean;
+    public prop_Empate: boolean;
 
     public constructor(mandante: String, visitante: String, numeroJoso: String, tipo_proposta: String, prop_Mandante: boolean, prop_Visitante: boolean, prop_Empate: boolean) {
         this.mandante = mandante;
