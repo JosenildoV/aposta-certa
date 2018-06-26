@@ -1,4 +1,4 @@
-import { fabricaDeApostas } from "../fabricaDeApostas";
+/*import { fabricaDeApostas } from "../fabricaDeApostas";
 
 var request: any = require('request-promise');
 var cheerio: any = require('cheerio');
@@ -41,4 +41,4 @@ describe('Lista de jogos', () =>{
 
 
     });
-});
+});*/
