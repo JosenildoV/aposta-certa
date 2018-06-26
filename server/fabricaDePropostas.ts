@@ -29,14 +29,18 @@ export class fabricaDePropostas {
 
     calcularProp(prob){
         let prop: any[] = [];
+        if((prob[0] >= prob[1] && prob[0] >= prob[2] && Math.abs(prob[0]-prob[1])<=diferencaMaxima && Math.abs(prob[0]-prob[2])<=diferencaMaxima) ||
+        (prob[1] >= prob[0] && prob[1] >= prob[2] && Math.abs(prob[0]-prob[1])<=diferencaMaxima && Math.abs(prob[1]-prob[2])<=diferencaMaxima) ||
+        (prob[2] >= prob[0] && prob[2] >= prob[1] && Math.abs(prob[0]-prob[2])<=diferencaMaxima && Math.abs(prob[1]-prob[2])<=diferencaMaxima)){
+            prop.push(ColocarProposta("tripla", true, true, true));
 
-        if(prob[0] > prob[2] && prob[1] > prob[2] && Math.abs(prob[0]-prob[1])<diferencaMaxima){
+        }else if(prob[0] > prob[2] && prob[1] > prob[2] && Math.abs(prob[0]-prob[1])<=diferencaMaxima){
             prop.push(ColocarProposta("dupla", true, true, false));
 
-        }else if(prob[0] > prob[1] && prob[2] > prob[1] && Math.abs(prob[0]-prob[2])<diferencaMaxima){
+        }else if(prob[0] > prob[1] && prob[2] > prob[1] && Math.abs(prob[0]-prob[2])<=diferencaMaxima){
             prop.push(ColocarProposta("dupla", true, false, true));
 
-        }else if(prob[1] > prob[0] && prob[2] > prob[0] && Math.abs(prob[1]-prob[2])<diferencaMaxima){
+        }else if(prob[1] > prob[0] && prob[2] > prob[0] && Math.abs(prob[1]-prob[2])<=diferencaMaxima){
             prop.push(ColocarProposta("dupla", false, true, true));
 
         }else if(prob[0] > prob[1] && prob[0] > prob[2]){
