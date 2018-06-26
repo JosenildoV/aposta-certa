@@ -79,4 +79,19 @@ defineSupportCode(function ({ Given, When, Then }) {
         }
     });
 
+    Then(/^Eu vejo a proposta de aposta "tripla" para "vitória do ([^\"]*)", "empate"  e "vitória do ([^\"]*)"$/,async(prop1,prop2)=>{
+        if(prob1>=prob2 && prob1>=probEmpate && Math.abs(prob1-prob2)<diferencaMaxima && Math.abs(prob1-probEmpate)<diferencaMaxima){
+            expect(prop1==time1).to.equal(true);
+            expect(prop2==time2).to.equal(true);
+        }else if(prob2>=prob1 && prob2>=probEmpate && Math.abs(prob1-prob2)<diferencaMaxima && Math.abs(prob2-probEmpate)<diferencaMaxima){
+            expect(prop1==time1).to.equal(true);
+            expect(prop2==time2).to.equal(true);
+        }else if(probEmpate>=prob1 && probEmpate>=prob2 && Math.abs(prob1-probEmpate)<diferencaMaxima && Math.abs(prob2-probEmpate)<diferencaMaxima){
+            expect(prop1==time1).to.equal(true);
+            expect(prop2==time2).to.equal(true);
+        }else{
+            expect(false).to.equal(true);
+        }
+    });
+
 })
