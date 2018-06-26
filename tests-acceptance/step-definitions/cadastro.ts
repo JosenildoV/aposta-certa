@@ -10,7 +10,7 @@ let expect = chai.expect;
 //And: Eu solicito o cadastro
 //Then: Vejo na tela de cadastro a seguinte mensagem ”Cadastro feito com sucesso!”
 defineSupportCode(function({ Given, When, Then}) {
-    Given(/^Eu estou na página "([^\"]*)"$/, async () => {
+    Given(/^Eu estou na pagina "([^\"]*)"$/, async () => {
         await browser.get("http://localhost:4200/cadastro");
         await expect(browser.getTitle()).to.eventually.equal('ApostaCerta');
     });

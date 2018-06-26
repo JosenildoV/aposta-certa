@@ -11,7 +11,7 @@ defineSupportCode(function ({ Given, When, Then }) {
 
     Given(/^Eu estou na página "([^\"]*)"$/, async (pagina) => {
         await browser.get("http://localhost:4200/concurso");
-        await expect(browser.getTitle()).to.eventually.equal('ApostaCerta');
+        await expect(browser.getTitle()).to.eventually.equal(pagina.toString());
     });
  
     Given(/^Terá o jogo "([^\"]*)" contra "([^\"]*)"$/, async (mandante, visitante) => {
@@ -21,7 +21,6 @@ defineSupportCode(function ({ Given, When, Then }) {
         
         await expect(mandante != visitante).to.equal(true);
     });
- 
 
     Given(/^A probabilidade de vitória do mandante "([^\"]*)" é "([^\"]*)%"$/, async(timeM, probM)=>{
          await expect(timeM != null).to.equal(true);
@@ -29,7 +28,6 @@ defineSupportCode(function ({ Given, When, Then }) {
             await expect(prob1 = probM);
     });
  
-
     Given(/^A probabilidade de vitória do visitante "([^\"]*)" é "([^\"]*)%"$/, async (timeV, probV) => {
          await expect(timeV != null).to.equal(true);
             await expect(prob2 = probV);
@@ -56,6 +54,25 @@ defineSupportCode(function ({ Given, When, Then }) {
     Then(/^Eu vejo a proposta de aposta "simples" para "empate"$/,async()=>{
         if(probEmpate>prob1 && probEmpate>prob2){
             expect(true).to.equal(true);
+        }else{
+            expect(false).to.equal(true);
+        }
+    });
+
+    Then(/^Eu vejo a proposta de aposta "dupla" para "vitória do ([^\"]*)" e "vitória do ([^\"]*)"$/,async(prop1, prop2)=>{
+        if(prob1>probEmpate && prob2>probEmpate && Math.abs(prob1-prob2)<10){
+            expect(prop1==time1).to.equal(true);
+            expect(prop2==time2).to.equal(true);
+        }else{
+            await expect(false).to.equal(true);
+        }
+    });
+
+    Then(/^Eu vejo a proposta de aposta "dupla" para "vitória do ([^\"]*)" e "empate"$/,async(prop1)=>{
+        if(prob1>prob2 && probEmpate>prob2 && Math.abs(prob1-probEmpate)<10){
+            expect(prop1==time1).to.equal(true);
+        }else if(prob2>prob1 && probEmpate>prob1 && Math.abs(prob2-probEmpate)<10){
+            expect(prop1==time2).to.equal(true);
         }else{
             expect(false).to.equal(true);
         }
