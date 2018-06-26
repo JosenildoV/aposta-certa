@@ -7,6 +7,7 @@ import { ApostadorService } from './apostador.service';
   styleUrls: ['./marcacao.component.css']
 })
 
+
 export class MarcacaoComponent implements OnInit {
 
   public constructor(private apostasService: ApostadorService) {
@@ -27,6 +28,15 @@ export class MarcacaoComponent implements OnInit {
       square.style.background = 'red';
     }else{
       square.style.background = 'white';
+    }
+  }
+  
+  mostrarValor(){
+    let botao = document.getElementsByClassName("valorProposta");
+    if(botao[0].textContent == "valor da proposta"){
+      botao[0].textContent = "valor da proposta: R$: "+"24"+",00";
+    }else{
+      botao[0].textContent = "valor da proposta";
     }
   }
 

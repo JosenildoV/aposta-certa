@@ -11,8 +11,12 @@ var indiceJogo = 0;
 defineSupportCode(function ({ Given, When, Then }) {
 
     Given(/^Eu estou na página "([^\"]*)"$/, async (pagina) => {
-        await browser.get("http://localhost:4200/concurso");
-        //await expect(browser.getTitle()).to.eventually.equal(pagina.toString());
+        if(expect(pagina=="Propostas")){
+            await browser.get("http://localhost:4200/marcacao");
+        }else{
+            await browser.get("http://localhost:4200/concurso");
+        }    
+        await expect(browser.getTitle()).to.eventually.equal("ApostaCerta");
     });
  
     Given(/^Terá o jogo "([^\"]*)" contra "([^\"]*)"$/, async (mandante, visitante) => {
@@ -48,7 +52,7 @@ defineSupportCode(function ({ Given, When, Then }) {
     });
 
     When(/^Eu solicito para ver valor da aposta$/, async() =>{
-        //await element(by.className('valorProposta')).click();
+        await element(by.id('valorProposta')).click();
     });
     
     Then(/^Eu vejo a proposta de aposta "simples" para "vitória do ([^\"]*)"$/,async(time)=>{

@@ -1,22 +1,22 @@
 @import url('https://fonts.googleapis.com/css?family=Cairo');
 
 nav {
-    width: 65%;
+    width: 50%;
     margin: auto;
-    text-align: right;
+    text-align: left;
     padding-right: 10%;
     margin-bottom: 2px;
 }
 
-nav button {
-    background-color: transparent; /* Green */
+/*nav button {
+    background-color: transparent; /* Green 
     border: none;
     color: black;
     text-decoration: underline; 
     font-size: 15px;
     font-weight: bold;
     font-family: 'Cairo', sans-serif;    
-}
+}*/
 
 nav button:hover {
     cursor: pointer;
@@ -68,4 +68,14 @@ td {
     background-color: rgb(240, 240, 240);
     font-weight: normal;
     width: 18%;
+}
+
+.valorProposta{
+    background-color: transparent; /* Green */
+    border: none;
+    color: black;
+    text-decoration: underline; 
+    font-size: 15px;
+    font-weight: bold;
+    font-family: 'Cairo', sans-serif;    
 }
